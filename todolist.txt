@@ -1,0 +1,1 @@
+Agar bisa linking, user perlu input minimal dua kali.
