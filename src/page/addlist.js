@@ -71,6 +71,7 @@ export default function Addlist() {
         alert("List added!")
       } catch (error) {
         console.log("Error: " + error.response.data.message)
+        alert("Category must be filled.")
       }
     };
 

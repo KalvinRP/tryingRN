@@ -25,6 +25,7 @@ export default function Login({ navigation }) {
       await AsyncStorage.setItem('token', response.data.token);
       await AsyncStorage.setItem('userId', response.data.user._id);
       await AsyncStorage.setItem('username', response.data.user.firstName);
+      console.log(response.data.token)
       const token = await AsyncStorage.getItem('token')
         if (token !== null) {
       navigation.navigate("Tabs");}

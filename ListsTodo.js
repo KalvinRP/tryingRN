@@ -10,8 +10,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { UserContext } from "./src/context/userContext";
 
 export default function Listodo({ navigation }) {
-    const [state, dispatch] = useContext(UserContext)
-    console.log(state)
+    // const [state, dispatch] = useContext(UserContext)
+    // console.log(state)
     // const [usname, setName] = useState()
     // const newNote = async () => {
     //     try {
@@ -102,9 +102,21 @@ export default function Listodo({ navigation }) {
           await API.patch('/List/' + check[0], {"status": check[1] === "Soon" ? "Done" : "Soon"});
           refetch();
         } catch (error) {
-          console.log(error)
+          if (error.response.data.message !== "path not found") {console.log(error)}
         }
       });
+
+      const loggingOut = async (e) => {
+        try {
+            await API.post('/auth/logout',);
+            await AsyncStorage.removeItem('token');
+            await AsyncStorage.removeItem('userId');
+            await AsyncStorage.removeItem('username');
+            navigation.navigate("Login");
+        } catch (error) {
+          alert(error.response.data.message)
+        }
+      };
     
     return (
         <View>
@@ -124,7 +136,7 @@ export default function Listodo({ navigation }) {
                         </Pressable>;
                     }}>
                         <Pressable>
-                            <Menu.Item onPress={() => navigation.navigate("Index")}>Logout</Menu.Item>
+                            <Menu.Item onPress={() => loggingOut()}>Logout</Menu.Item>
                         </Pressable>
                         <Menu.Item isDisabled>Settings</Menu.Item>
                     </Menu>
